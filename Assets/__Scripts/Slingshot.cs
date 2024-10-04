@@ -9,6 +9,10 @@ public class Slingshot : MonoBehaviour
     public float velocityMult = 10f;
     public GameObject projLinePrefab;
 
+    [Header("Rubber Band Setup")]
+    public LineRenderer lineRenderer; // Ref to linerender
+    public Transform leftAnchor; // Left prong of sling
+    public Transform rightAnchor; // Right arm of sling
 
 
     [Header("Dynamic")]
@@ -34,6 +38,8 @@ public class Slingshot : MonoBehaviour
         launchPoint = launchPointTrans.gameObject;
         launchPoint.SetActive(false);
         launchPos = launchPointTrans.position;
+
+        lineRenderer.positionCount = 2;
     }
 
     void OnMouseDown() {
@@ -44,6 +50,8 @@ public class Slingshot : MonoBehaviour
         projectile.transform.position = launchPos;
 
         projectile.GetComponent<Rigidbody>().isKinematic = true;
+
+        UpdateRubberBand();
     }
     
 
@@ -69,6 +77,8 @@ public class Slingshot : MonoBehaviour
         Vector3 projPos = launchPos + mouseDelta;
         projectile.transform.position = projPos;
 
+        UpdateRubberBand();
+
         if (Input.GetMouseButtonUp(0)) {
             aimingMode = false;
             Rigidbody projRB = projectile.GetComponent<Rigidbody>();
@@ -78,6 +88,22 @@ public class Slingshot : MonoBehaviour
             FollowCam.POI = projectile;
             Instantiate<GameObject>(projLinePrefab, projectile.transform);
             projectile = null;
+
+            ResetRubberBand();
+        }
+    }
+
+    void UpdateRubberBand() {
+        if (lineRenderer != null && projectile != null) {
+            lineRenderer.SetPosition(0, leftAnchor.position);
+            lineRenderer.SetPosition(1, projectile.transform.position);
+        }
+    }
+
+    void ResetRubberBand() {
+        if (lineRenderer != null) {
+            lineRenderer.SetPosition(0, leftAnchor.position);
+            lineRenderer.SetPosition(1, rightAnchor.position);
         }
     }
 
