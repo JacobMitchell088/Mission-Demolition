@@ -1,2 +1,5 @@
 # Mission Demolition
  Beginner Unity Project
+
+
+I believe I've made a few enhancements to the base projects to improve it. First, I've made sure to greatly dim the previous line drawings so it's incredibly obvious when a player is looking at previous shots. Second, I've added a 2 second delay when overlapping with the goal to ensure the player gets necessary time to process their shot and view the outcome. Finally, taking inspiration from Angry Birds, I've implemented an entirely new keystroke players can activate after shooting their projectile to accelerate it 2.5x the base speed once in the air. Players have the option of pressing space bar once their projectile is airborne for a one time, per bullet, speed boost that greatly accelerates the bullet. Though a small change, this ensures players have additional agency and decision making within the game. Likely leading to a more enjoyable experience. If I had to continue working on this project I'd likely add more difficult structures and a limited shot mechanic where players are only given a few chances per structure.
