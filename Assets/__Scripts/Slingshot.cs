@@ -14,6 +14,10 @@ public class Slingshot : MonoBehaviour
     public Transform leftAnchor; // Left prong of sling
     public Transform rightAnchor; // Right arm of sling
 
+    [Header("SFX")]
+    public AudioSource audioSource;  // Reference to the AudioSource component
+    public AudioClip launchSFX;      // The sound effect to play when launching the ball
+
 
     [Header("Dynamic")]
     public GameObject launchPoint;
@@ -22,6 +26,10 @@ public class Slingshot : MonoBehaviour
     public bool aimingMode;
 
     
+    void Start() {
+        audioSource.volume = 0f; // Since mouseUp(0) will always be true when iterating through the first time
+    }
+
     void OnMouseEnter() {
         //print("Slingshot:OnMouseEnter()");
         launchPoint.SetActive(true);
@@ -79,7 +87,7 @@ public class Slingshot : MonoBehaviour
 
         UpdateRubberBand();
 
-        if (Input.GetMouseButtonUp(0)) {
+        if (Input.GetMouseButtonUp(0) && aimingMode) {
             aimingMode = false;
             Rigidbody projRB = projectile.GetComponent<Rigidbody>();
             projRB.isKinematic = false;
@@ -89,7 +97,10 @@ public class Slingshot : MonoBehaviour
             Instantiate<GameObject>(projLinePrefab, projectile.transform);
             projectile = null;
 
+
+            audioSource.PlayOneShot(launchSFX);
             ResetRubberBand();
+            audioSource.volume = 1f;
         }
     }
 
