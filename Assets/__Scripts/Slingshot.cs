@@ -57,6 +57,8 @@ public class Slingshot : MonoBehaviour
 
         projectile.transform.position = launchPos;
 
+        projectile.GetComponent<Projectile>().ResetSpeedBoost(); // Reset the speed boost for our new bullet
+
         projectile.GetComponent<Rigidbody>().isKinematic = true;
 
         UpdateRubberBand();

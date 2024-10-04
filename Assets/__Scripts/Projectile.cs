@@ -20,6 +20,11 @@ public class Projectile : MonoBehaviour
     private Rigidbody rigid;
 
 
+    // Speed boost stuff
+    public float speedBoostMultiplier = 2.5f;
+    private bool speedBoostUsed = false;
+
+
 
 
     // Start is called before the first frame update
@@ -52,6 +57,21 @@ public class Projectile : MonoBehaviour
             awake = false;
             rigid.Sleep();
         }
+    }
+
+    void Update() {
+        if (Input.GetKeyDown(KeyCode.Space) && !speedBoostUsed && awake) {
+            ApplySpeedBoost();
+        }
+    }
+
+    void ApplySpeedBoost() {
+        rigid.velocity *= speedBoostMultiplier;
+        speedBoostUsed = true;
+    }
+    
+    public void ResetSpeedBoost() {
+        speedBoostUsed = false;
     }
 
 }
